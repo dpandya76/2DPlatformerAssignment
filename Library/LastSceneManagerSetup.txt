@@ -1,4 +1,4 @@
 sceneSetups:
-- path: G:/Studies Deep/Game Programming/COMP305-W2016-PlatformerDemo-master/Assets/_Scenes/Main.unity
+- path: Assets/Scenes/Main1.unity
   isLoaded: 1
   isActive: 1
