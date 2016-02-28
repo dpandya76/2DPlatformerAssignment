@@ -26,6 +26,7 @@ public class HeroController : MonoBehaviour {
     public float jumpForce;
     public Transform groundCheck;
     public Transform Camera;
+    public GameController gameController;
 
     // Private instance variables
     private Animator _animator;
@@ -48,7 +49,7 @@ public class HeroController : MonoBehaviour {
         this._jump = 0f;
         this._facingRight = true;
         //the hero placed in start postion
-        this.spwan();
+        this.spawn();
         
        
 	
@@ -138,9 +139,18 @@ public class HeroController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.CompareTag("Gas"))
+        {
+            this.gameController.ScoreValue += 10;
+            Destroy(other.gameObject);
+        }
+
+
+
         if (other.gameObject.CompareTag("Death"))
         {
-            this.spwan();
+            this.spawn();
+            this.gameController.LivesValue--;
         }
     }
 
@@ -157,8 +167,9 @@ public class HeroController : MonoBehaviour {
         }
     }
 
-    private void spwan()
+    private void spawn()
     {
-        this._transform.position = new Vector3(-126f, 126f, 0);
+        this._transform.position = new Vector3(-240f, 60f, 0);
+
     }
 }
