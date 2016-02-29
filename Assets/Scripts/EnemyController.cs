@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour {
     private Transform _transform;
     private Vector3 pos1 = new Vector3(1440, 19, 0);
     private Vector3 pos2 = new Vector3(1740, 19, 0);
-    public float speed = 0.5f;
+    public float speed = 0.2f;
 
 
     // Use this for initialization

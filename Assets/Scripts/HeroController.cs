@@ -37,8 +37,13 @@ public class HeroController : MonoBehaviour {
     private Rigidbody2D _rigidBody2D;
     private bool _isGrounded;
 
-	// Use this for initialization
-	void Start () {
+    private AudioSource[] _audioSources;
+    private AudioSource _jumpSound;
+    private AudioSource _coinSound;
+    private AudioSource _hurtSound;
+
+    // Use this for initialization
+    void Start () {
         this.velocityRange = new VelocityRange(300f, 5000f);
  
 
@@ -49,11 +54,15 @@ public class HeroController : MonoBehaviour {
         this._jump = 0f;
         this._facingRight = true;
         //the hero placed in start postion
-        this.spawn();
-        
-       
-	
-	}
+        this._transform.position = new Vector3(2761f, 229f, 0);
+        //this.spawn();
+
+        this._audioSources = gameObject.GetComponents<AudioSource>();
+        this._jumpSound = this._audioSources[0];
+        this._coinSound = this._audioSources[1];
+        this._hurtSound = this._audioSources[2];
+
+    }
 	
 
 	// Update is called once per frame
@@ -121,7 +130,7 @@ public class HeroController : MonoBehaviour {
                 // jump force
                 if (absValY < this.velocityRange.maximum)
                 {
-                    //this._jumpSound.Play();
+                    this._jumpSound.Play();
                     forceY = this.jumpForce;
                 }
 
@@ -141,6 +150,7 @@ public class HeroController : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Gas"))
         {
+            this._coinSound.Play();
             this.gameController.ScoreValue += 10;
             Destroy(other.gameObject);
         }
@@ -149,8 +159,28 @@ public class HeroController : MonoBehaviour {
 
         if (other.gameObject.CompareTag("Death"))
         {
+            this._hurtSound.Play();
             this.spawn();
             this.gameController.LivesValue--;
+        }
+
+        if(other.gameObject.CompareTag("Death2"))
+        {
+            this._hurtSound.Play();
+            this._transform.position = new Vector3(520f, 60f, 0);
+            this.gameController.LivesValue--;
+        }
+
+        if (other.gameObject.CompareTag("Death3"))
+        {
+            this._hurtSound.Play();
+            this._transform.position = new Vector3(1294f, 229f, 0);
+            this.gameController.LivesValue--;
+        }
+
+        if(other.gameObject.CompareTag("Finish"))
+        {
+            this.gameController.Finish = true;
         }
     }
 
