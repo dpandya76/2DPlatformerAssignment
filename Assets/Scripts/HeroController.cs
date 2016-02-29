@@ -39,7 +39,7 @@ public class HeroController : MonoBehaviour {
 
     private AudioSource[] _audioSources;
     private AudioSource _jumpSound;
-    private AudioSource _coinSound;
+    private AudioSource _fuelSound;
     private AudioSource _hurtSound;
 
     // Use this for initialization
@@ -54,12 +54,12 @@ public class HeroController : MonoBehaviour {
         this._jump = 0f;
         this._facingRight = true;
         //the hero placed in start postion
-        this._transform.position = new Vector3(2761f, 229f, 0);
-        //this.spawn();
+        //this._transform.position = new Vector3(2761f, 229f, 0); //for testing
+        this.spawn();
 
         this._audioSources = gameObject.GetComponents<AudioSource>();
         this._jumpSound = this._audioSources[0];
-        this._coinSound = this._audioSources[1];
+        this._fuelSound = this._audioSources[1];
         this._hurtSound = this._audioSources[2];
 
     }
@@ -116,7 +116,7 @@ public class HeroController : MonoBehaviour {
                     this._flip();
                 }
 
-                // call the walk clip
+                // call the walk animation
                 this._animator.SetInteger("Anim_state", 1);
             }
             else {
@@ -137,7 +137,7 @@ public class HeroController : MonoBehaviour {
             }
         }
         else {
-            // call the "jump" clip
+            // call the jump animation
             this._animator.SetInteger("Anim_state", 2);
         }
 
@@ -150,7 +150,7 @@ public class HeroController : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Gas"))
         {
-            this._coinSound.Play();
+            this._fuelSound.Play();
             this.gameController.ScoreValue += 10;
             Destroy(other.gameObject);
         }
